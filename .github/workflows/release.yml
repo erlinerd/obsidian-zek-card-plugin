@@ -1,0 +1,79 @@
+name: Release Obsidian Plugin
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+          ref: ${{ github.ref_name }}
+
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Set version from tag
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          VERSION=${GITHUB_REF_NAME#v}
+          npm version "$VERSION" --no-git-tag-version
+
+
+      - name: Build plugin
+        run: pnpm run build
+
+      - name: Update manifest and versions
+        run: pnpm run version
+
+      - name: Validate release files
+        run: |
+          for f in manifest.json main.js styles.css; do
+            if [ ! -f "$f" ]; then
+              echo "::error::Missing $f"
+              exit 1
+            fi
+          done
+
+      - name: Validate templates directory
+        run: |
+          if [ ! -d templates ]; then
+            echo "::error::Missing templates directory"
+            exit 1
+          fi
+
+      - name: Package zip
+        run: |
+          ZIP_NAME=obsidian-zek-card-plugin
+          rm -f "$ZIP_NAME"
+          zip -r "$ZIP_NAME" manifest.json main.js styles.css templates
+
+      - name: Publish GitHub Release
+        if: github.ref_type == 'tag'
+        uses: softprops/action-gh-release@v2
+        with:
+          files: obsidian-zek-card-plugin.zip
+          tag_name: ${{ github.ref_name }}
+          name: ${{ github.ref_name }}
+          overwrite_files: true
+          token: ${{ secrets.GITHUB_TOKEN }}

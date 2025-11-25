@@ -1,0 +1,36 @@
+@import "./tailwind.css";
+/* 侧边栏按钮图标样式 */
+.zek-plugin-ribbon-class {
+	color: var(--interactive-accent);
+	transition: color 0.2s ease;
+}
+
+.zek-plugin-ribbon-class:hover {
+	color: var(--interactive-accent-hover);
+}
+
+/* 自定义卡片图标样式 */
+.zek-cards-icon {
+	position: relative;
+}
+
+.zek-cards-icon::before {
+	content: "";
+	position: absolute;
+	top: 0px;
+	left: -2px;
+	width: 16px;
+	height: 16px;
+	border: 2px solid currentColor;
+	border-radius: 2px;
+	background: linear-gradient(135deg, transparent 50%, currentColor 50%);
+}
+
+/* 暗色主题下的样式调整 */
+.theme-dark .zek-plugin-ribbon-class {
+	color: var(--interactive-accent);
+}
+
+.theme-dark .zek-plugin-ribbon-class:hover {
+	color: var(--interactive-accent-hover);
+}

@@ -1,0 +1,22 @@
+{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "new-york",
+  "rsc": false,
+  "tsx": true,
+  "tailwind": {
+    "config": "tailwind.config.ts",
+    "css": "src/frameworks-drivers/web/styles/tailwind.css",
+    "baseColor": "neutral",
+    "cssVariables": true,
+    "prefix": ""
+  },
+  "iconLibrary": "lucide",
+  "aliases": {
+    "components": "@/frameworks-drivers/shared/components",
+    "utils": "@/frameworks-drivers/shared/lib/utils",
+    "ui": "@/frameworks-drivers/shared/components/ui",
+    "lib": "@/frameworks-drivers/shared/lib",
+    "hooks": "@/frameworks-drivers/shared/hooks"
+  },
+  "registries": {}
+}

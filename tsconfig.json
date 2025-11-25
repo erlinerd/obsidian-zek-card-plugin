@@ -1,0 +1,46 @@
+{
+	"compilerOptions": {
+		"baseUrl": ".",
+		"inlineSourceMap": true,
+		"inlineSources": true,
+		"module": "ESNext",
+		"target": "ES6",
+		"allowJs": true,
+		"noImplicitAny": true,
+		"importHelpers": true,
+		"isolatedModules": true,
+		"strictNullChecks": true,
+		"allowSyntheticDefaultImports": true,
+		"jsx": "react-jsx",
+		"forceConsistentCasingInFileNames": true,
+		"types": [
+			"vitest/globals"
+		],
+		"strictPropertyInitialization": false,
+        "experimentalDecorators": true, // enable decorators
+        "emitDecoratorMetadata": true, // emit decorator metadata
+        "esModuleInterop": true, // interop with CommonJS modules
+        "moduleResolution": "Node", // Node module resolution
+        "strict": true, // enable strict mode for better type safety
+        "skipLibCheck": true, // skip lib checks to avoid DI lib conflicts
+		"lib": [
+			"DOM",
+			"ES5",
+			"ES6",
+			"ES7"
+		],
+		"paths": {
+			"@/*": [
+				"./src/*"
+			],
+		}
+	},
+	"include": [
+		"**/*.ts",
+		"**/*.tsx",
+	],
+	"exclude": [
+		"**/node_modules/**",
+		"**/dist/**"
+	]
+}
