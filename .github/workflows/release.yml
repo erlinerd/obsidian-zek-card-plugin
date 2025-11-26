@@ -70,6 +70,9 @@ jobs:
           rm -f templates.zip
           zip -r templates.zip templates
 
+      # Auto-generate release notes using GitHub metadata
+      # (No manual CHANGELOG.md needed)
+
       - name: Publish GitHub Release
         if: github.ref_type == 'tag'
         uses: softprops/action-gh-release@v2
@@ -82,5 +85,9 @@ jobs:
             templates.zip
           tag_name: ${{ github.ref_name }}
           name: ${{ github.ref_name }}
+          generate_release_notes: true
+          draft: false
+          prerelease: false
+          make_latest: true
           overwrite_files: true
           token: ${{ secrets.GITHUB_TOKEN }}
