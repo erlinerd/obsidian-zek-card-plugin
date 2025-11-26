@@ -26,7 +26,7 @@ export class LocalTemplateRepository implements ITemplateRepository {
 		this.templateDir = path.join(
 			this.plugin.app.vault.configDir,
 			"plugins",
-			this.plugin.manifest.id,
+			"obsidian-zek-card-plugin",
 			"templates",
 		);
 	}
