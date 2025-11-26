@@ -11,7 +11,8 @@ export const createSelectors = <S extends UseBoundStore<StoreApi<object>>>(
     store.use = {} as Record<string, () => unknown>;
     const keys = Object.keys(store.getState());
     for (const k of keys) {
-        store.use[k] = () => store((s) => (s as Record<string, unknown>)[k]);
+        (store.use as Record<string, () => unknown>)[k] = () =>
+            store((s) => (s as Record<string, unknown>)[k]);
     }
 
 	return store;

@@ -22,8 +22,10 @@ export function registerOnCardCreated(bus: IEventBusPort) {
 	);
     const repo = container.resolve<ICardPersistencePort>(TOKENS.ICardPersistencePort);
 
-    bus.on("card.created", (payload: CardCreatedEvent) => {
-        const fp = payload?.filePath ?? "";
+    bus.on("card.created", (payload: unknown) => {
+        const fp = typeof (payload as { filePath?: string })?.filePath === "string"
+            ? (payload as { filePath?: string }).filePath!
+            : "";
         logger.info?.(`card.created ${fp}`);
         if (fp) {
             presenter.showCreated(fp, false);
