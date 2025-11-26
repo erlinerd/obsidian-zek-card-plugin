@@ -64,15 +64,22 @@ jobs:
 
       - name: Package zip
         run: |
-          ZIP_NAME=obsidian-zek-card-plugin
+          ZIP_NAME=obsidian-zek-card-plugin.zip
           rm -f "$ZIP_NAME"
           zip -r "$ZIP_NAME" manifest.json main.js styles.css templates
+          rm -f templates.zip
+          zip -r templates.zip templates
 
       - name: Publish GitHub Release
         if: github.ref_type == 'tag'
         uses: softprops/action-gh-release@v2
         with:
-          files: obsidian-zek-card-plugin.zip
+          files: |
+            obsidian-zek-card-plugin.zip
+            manifest.json
+            main.js
+            styles.css
+            templates.zip
           tag_name: ${{ github.ref_name }}
           name: ${{ github.ref_name }}
           overwrite_files: true
