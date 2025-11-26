@@ -13,8 +13,8 @@ import { container } from "tsyringe";
  * Plugin entry class using Clean Architecture structure.
  */
 export default class ZekCardPlugin extends Plugin {
-    async onload() {
-        bootstrap(this);
+	onload() {
+		bootstrap(this);
 
 		registerRibbonIcon(this);
 		registerFileWatchListeners(this);
@@ -22,7 +22,7 @@ export default class ZekCardPlugin extends Plugin {
 		registerDashboardView(this);
 	}
 
-    async onunload() {
-        container.reset();
-    }
+	onunload() {
+		container.reset();
+	}
 }

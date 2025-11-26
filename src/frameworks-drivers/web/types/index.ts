@@ -18,7 +18,7 @@ export type SceneStatistics = Record<string, number>;
 export interface SceneCardWithMetadata {
   name: string;
   path: string;
-  metadata?: any;
+  metadata?: unknown;
 }
 
 /** ScenePanel props */
@@ -39,10 +39,10 @@ export interface CardController {
 
 export interface DashboardViewController {
   getCardCount(): Promise<number>;
-  getDomainDetails(): Promise<any[]>;
-  getCardTypeStatistics(): Promise<any>;
+  getDomainDetails(): Promise<Record<string, unknown>[]>;
+  getCardTypeStatistics(): Promise<Record<string, unknown>>;
   getSceneStatistics(): Promise<SceneStatistics>;
-  getMocCards(): Promise<any[]>;
+  getMocCards(): Promise<Record<string, unknown>[]>;
 }
 
 export interface SceneController {
@@ -52,7 +52,7 @@ export interface SceneController {
 /** Domain detail */
 export interface DomainDetail {
   name: string;
-  cards: any[];
+  cards: Record<string, unknown>[];
 }
 
 /** Card type statistics */

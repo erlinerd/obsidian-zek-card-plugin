@@ -1,4 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react';
+import type { Plugin } from 'obsidian';
+import { container } from 'tsyringe';
+import { TOKENS } from '@/infrastructure/di/Tokens';
 
 type Theme = "dark" | "light" | "system";
 
@@ -26,9 +29,16 @@ export function ThemeProvider({
 	storageKey = "vite-ui-theme",
 	...props
 }: ThemeProviderProps) {
-	const [theme, setTheme] = useState<Theme>(
-		() => (localStorage.getItem(storageKey) as Theme) || defaultTheme
-	);
+    const [theme, setTheme] = useState<Theme>(() => {
+        let stored: string | null = null;
+        try {
+            const plugin = container.resolve<Plugin>(TOKENS.Plugin);
+            stored = plugin.app.loadLocalStorage?.(storageKey) ?? null;
+        } catch {
+            stored = typeof window !== 'undefined' ? window.localStorage.getItem(storageKey) : null;
+        }
+        return (stored as Theme) || defaultTheme;
+    });
 
 	useEffect(() => {
 		const root = window.document.documentElement;
@@ -36,7 +46,7 @@ export function ThemeProvider({
 		root.classList.remove("light", "dark");
 
 		if (theme === "system") {
-			let systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
+			const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
 				.matches
 				? "dark"
 				: "light";
@@ -48,13 +58,20 @@ export function ThemeProvider({
 		root.classList.add(theme);
 	}, [theme]);
 
-	const value = {
-		theme,
-		setTheme: (theme: Theme) => {
-			localStorage.setItem(storageKey, theme);
-			setTheme(theme);
-		},
-	};
+    const value = {
+        theme,
+        setTheme: (theme: Theme) => {
+            try {
+                const plugin = container.resolve<Plugin>(TOKENS.Plugin);
+                plugin.app.saveLocalStorage?.(storageKey, theme);
+            } catch {
+                if (typeof window !== 'undefined') {
+                    window.localStorage.setItem(storageKey, theme);
+                }
+            }
+            setTheme(theme);
+        },
+    };
 
 	return (
 		<ThemeProviderContext.Provider {...props} value={value}>

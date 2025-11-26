@@ -90,14 +90,10 @@ const ScenePanel: React.FC<ScenePanelProps> = ({ onOpenCardFile }) => {
     const sceneCards = useDashboardStore(selectSceneCards);
     const loading = useDashboardStore((s) => s.loading as boolean);
 	// Memoize `hasAnyScene` and `totalScenes` calculations
-    const { hasAnyScene, totalScenes } = useMemo(
+    const { hasAnyScene } = useMemo(
         () => ({
             hasAnyScene: Object.values(sceneStatistics).some(
                 (count) => count > 0
-            ),
-            totalScenes: Object.values(sceneStatistics).reduce(
-                (sum, count) => sum + count,
-                0
             ),
         }),
         [sceneStatistics]

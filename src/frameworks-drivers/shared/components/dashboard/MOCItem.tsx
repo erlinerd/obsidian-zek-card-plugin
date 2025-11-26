@@ -11,7 +11,7 @@
 
 import React from 'react';
 import { FileText } from 'lucide-react';
-import { Item, ItemMedia, ItemContent, ItemTitle, ItemDescription } from '@/frameworks-drivers/shared/ui/item';
+import { Item, ItemMedia, ItemTitle, ItemDescription } from '@/frameworks-drivers/shared/ui/item';
 
 // Type for MOC item
 type MOCItemType = {

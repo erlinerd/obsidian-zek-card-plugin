@@ -17,12 +17,12 @@ export function registerOnCardExisted(bus: IEventBusPort) {
   const logger = container.resolve<ILoggerPort>(TOKENS.ILoggerPort);
   const presenter = container.resolve<ICardPresenterPort>(TOKENS.CardPresenter);
   const repo = container.resolve<ICardPersistencePort>(TOKENS.ICardPersistencePort);
-  bus.on("card.existed", (payload: CardExistedEvent | any) => {
-    const fp = (payload as any)?.filePath ?? "";
+  bus.on("card.existed", (payload: CardExistedEvent) => {
+    const fp = payload?.filePath ?? "";
     logger.info?.(`card.existed ${fp}`);
     if (fp) {
       presenter.showCreated(fp, true);
-      repo.open(fp);
+      void repo.open(fp);
     }
   });
 }

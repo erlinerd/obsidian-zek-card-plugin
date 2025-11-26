@@ -16,8 +16,8 @@ export class CardMetaProcessorAdapter implements ICardMetaProcessorPort {
 	 * Serialize metadata to YAML frontmatter with inner links for source/domain.
 	 */
 	processMeta(meta: CardMeta): string {
-		let metaData = meta.serialize();
-		let str = Yaml.stringify({
+		const metaData = meta.serialize();
+		const str = Yaml.stringify({
 			...metaData,
 			source: metaData.source.map((item) =>
 				this.toInnerLink(item.toString())

@@ -13,43 +13,42 @@ export class Logger implements ILoggerPort {
 	/**
 	 * Log debug information
 	 */
-	debug(message: string, data?: any): void {
-		if (data) {
-			console.debug(`[DEBUG] ${message}`, data);
-		} else {
-			console.debug(`[DEBUG] ${message}`);
-		}
-	}
+    debug(message: string, data?: unknown): void {
+        if (data !== undefined) {
+            console.debug(`[DEBUG] ${message}`, data);
+        } else {
+            console.debug(`[DEBUG] ${message}`);
+        }
+    }
 
 	/**
 	 * Log info
 	 */
-	info(message: string, data?: any): void {
-		if (data) {
-			console.info(`[INFO] ${message}`, data);
-		} else {
-			console.info(`[INFO] ${message}`);
-		}
-	}
+    info(message: string, data?: unknown): void {
+        if (data !== undefined) {
+            console.debug(`[INFO] ${message}`, data);
+        } else {
+            console.debug(`[INFO] ${message}`);
+        }
+    }
 
 	/**
 	 * Log warning
 	 */
-	warn(message: string, data?: any): void {
-		if (data) {
-			console.warn(`[WARN] ${message}`, data);
-		} else {
-			console.warn(`[WARN] ${message}`);
-		}
-	}
+    warn(message: string, data?: unknown): void {
+        if (data !== undefined) {
+            console.warn(`[WARN] ${message}`, data);
+        } else {
+            console.warn(`[WARN] ${message}`);
+        }
+    }
 
 	/**
 	 * Log error
 	 */
-		error(message: string, error?: Error, data?: any): void {
-			const logData: any[] = [`[ERROR] ${message}`];
-			if (error) logData.push(error);
-			if (data) logData.push(data);
-			console.error(...logData);
-		}
+        error(message: string, error?: Error): void {
+            const logData: unknown[] = [`[ERROR] ${message}`];
+            if (error) logData.push(error);
+            console.error(...logData as [unknown, ...unknown[]]);
+        }
 	}

@@ -12,7 +12,7 @@ import { ICardPersistencePort, CardData, CardSaveResult, CardListItem } from "@/
 import { injectable, inject } from "tsyringe";
 import { TOKENS } from "@/infrastructure/di/Tokens";
 import type { ILoggerPort } from "@/domain/ports/ILoggerPort";
-import { Plugin, App, TFile } from "obsidian";
+import { Plugin, TFile } from "obsidian";
 import { CardScene, isValidCardScene } from "@/domain/aggregates/card-note/enums/CardScene";
 
 @injectable()
@@ -35,8 +35,8 @@ export class CardRepositoryAdapter implements ICardPersistencePort {
         return { path: filePath };
     }
 
-    async exists(path: string): Promise<boolean> {
-        return Boolean(this.plugin.app.vault.getAbstractFileByPath(path));
+    exists(path: string): Promise<boolean> {
+        return Promise.resolve(Boolean(this.plugin.app.vault.getAbstractFileByPath(path)));
     }
 
     async open(path: string): Promise<void> {
@@ -46,19 +46,19 @@ export class CardRepositoryAdapter implements ICardPersistencePort {
         }
     }
 
-    async listAllCards(): Promise<CardListItem[]> {
+    listAllCards(): Promise<CardListItem[]> {
         const files = this.plugin.app.vault.getMarkdownFiles();
         const result: CardListItem[] = [];
         for (const file of files) {
             const cache = this.plugin.app.metadataCache.getFileCache(file);
-            const fm: any = cache?.frontmatter;
-            const typeVal: string | undefined = fm?.type;
+            const fm = cache?.frontmatter as Record<string, unknown> | undefined;
+            const typeVal = fm?.type as string | undefined;
             if (typeVal && String(typeVal).toLowerCase() !== "card") continue;
-            const sceneVal: string | undefined = fm?.scene;
+            const sceneVal = fm?.scene as string | undefined;
             if (!sceneVal || !isValidCardScene(sceneVal)) continue;
-            const domainsRaw: any = fm?.domain;
+            const domainsRaw = fm?.domain as unknown;
             const domainsArr: string[] = Array.isArray(domainsRaw)
-                ? domainsRaw.map((d: any) => String(d))
+                ? (domainsRaw as unknown[]).map((d) => String(d))
                 : [];
             const cleanDomains = domainsArr.map((d) => d.replace(/^\[\[/, "").replace(/\]\]$/, ""));
             result.push({
@@ -68,7 +68,7 @@ export class CardRepositoryAdapter implements ICardPersistencePort {
                 domain: cleanDomains,
             });
         }
-        return result;
+        return Promise.resolve(result);
     }
 
 }

@@ -137,7 +137,7 @@ const ChartTooltipContent = React.forwardRef<
       }
 
       const [item] = payload
-      const key = `${labelKey || item?.dataKey || item?.name || "value"}`
+      const key = String(labelKey ?? item?.dataKey ?? item?.name ?? "value")
       const itemConfig = getPayloadConfigFromPayload(config, item, key)
       const value =
         !labelKey && typeof label === "string"
@@ -186,20 +186,20 @@ const ChartTooltipContent = React.forwardRef<
           {payload
             .filter((item) => item.type !== "none")
             .map((item, index) => {
-              const key = `${nameKey || item.name || item.dataKey || "value"}`
+              const key = String(nameKey ?? item.name ?? item.dataKey ?? "value")
               const itemConfig = getPayloadConfigFromPayload(config, item, key)
               const indicatorColor = color || (item.payload && typeof item.payload === 'object' ? item.payload.fill : undefined) || item.color
 
               return (
                 <div
-                  key={item.dataKey}
+                  key={String(item.dataKey ?? index)}
                   className={cn(
                     "flex w-full flex-wrap items-stretch gap-2 [&>svg]:h-2.5 [&>svg]:w-2.5 [&>svg]:text-muted-foreground",
                     indicator === "dot" && "items-center"
                   )}
                 >
                   {formatter && item?.value !== undefined && item.name ? (
-                    formatter(item.value, item.name, item, index, item.payload as any)
+                    formatter(item.value, item.name, item, index, item.payload as unknown)
                   ) : (
                     <>
                       {itemConfig?.icon ? (
@@ -288,7 +288,7 @@ const ChartLegendContent = React.forwardRef<
         {payload
           .filter((item) => item.type !== "none")
           .map((item) => {
-            const key = `${nameKey || item.dataKey || "value"}`
+            const key = String(nameKey ?? item.dataKey ?? "value")
             const itemConfig = getPayloadConfigFromPayload(config, item, key)
 
             return (
@@ -328,13 +328,13 @@ function getPayloadConfigFromPayload(
     return undefined
   }
 
+  const payloadObj = payload as Record<string, unknown>
   const payloadPayload =
-    payload && 
-    typeof payload === "object" && 
-    "payload" in payload &&
-    typeof (payload as any).payload === "object" &&
-    (payload as any).payload !== null
-      ? (payload as any).payload
+    payloadObj &&
+    typeof payloadObj === "object" &&
+    typeof payloadObj.payload === "object" &&
+    payloadObj.payload !== null
+      ? (payloadObj.payload as Record<string, unknown>)
       : undefined
 
   let configLabelKey: string = key

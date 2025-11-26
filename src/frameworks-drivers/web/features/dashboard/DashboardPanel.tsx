@@ -6,14 +6,10 @@ import { Stats } from "./Stats";
 import { ModeToggle, cn } from "@/frameworks-drivers/shared";
 import { DashboardHeader } from "@/frameworks-drivers/shared";
 import {
-	useDashboardStore,
-	selectSceneCards,
-	selectSceneStatistics,
-	selectDomainItems,
-	selectLoading,
-	selectLastRefresh,
-	selectFetchCards,
-	selectTotalCardCount,
+    useDashboardStore,
+    selectLoading,
+    selectLastRefresh,
+    selectFetchCards,
 } from "@/frameworks-drivers/web";
 import { toast } from "sonner";
 import { Button } from "@/frameworks-drivers/shared";
@@ -30,7 +26,7 @@ export const DashboardPanel = () => {
     const loading = useDashboardStore(selectLoading);
     const lastRefresh = useDashboardStore(selectLastRefresh);
     const fetchCards = useDashboardStore(selectFetchCards);
-    const totalCount = useDashboardStore(selectTotalCardCount);
+    
     
     useEffect(() => {
         if (!loading && !lastRefresh) {
@@ -45,9 +41,9 @@ export const DashboardPanel = () => {
 		lastAccessed: Date;
 	}[] = [];
 
-	const handleOpenCardFileCallback = (card: any) => {
-		toast.info(`打开: ${card.path}`);
-	};
+    const handleOpenCardFileCallback = (card: { name: string; path: string }) => {
+        toast.info(`打开: ${card.path}`);
+    };
 
 	const handleCreateMocCallback = () => {};
 

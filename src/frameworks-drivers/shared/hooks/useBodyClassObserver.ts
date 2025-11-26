@@ -18,8 +18,8 @@ export const useBodyClassObserver = () => {
 			)
 				? "dark"
 				: "light";
-			root.classList.add(themeClass);
-			console.log(`主题已更新为: ${themeClass}`);
+            root.classList.add(themeClass);
+            console.debug(`主题已更新为: ${themeClass}`);
 		};
 
 		// Run once initially
@@ -28,8 +28,8 @@ export const useBodyClassObserver = () => {
 		// Minimal MutationObserver to track class changes
 		const handleBodyClassChange = () => {
 			const newClasses = Array.from(window.document.body.classList);
-			setBodyClasses(newClasses);
-			console.log("Body类发生变化:", newClasses);
+            setBodyClasses(newClasses);
+            console.debug("Body类发生变化:", newClasses);
 			updateThemeClass();
 		};
 

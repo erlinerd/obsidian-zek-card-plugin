@@ -1,5 +1,3 @@
-import { randomUUID } from "crypto";
-
 /** Domain event base class: all concrete events extend this */
 export abstract class DomainEvent {
     public readonly id: string; // unique event id
@@ -9,7 +7,8 @@ export abstract class DomainEvent {
     constructor(
         public readonly aggregateRootId: string // aggregate root id (required)
     ) {
-        this.id = randomUUID();
+        const uuid = globalThis?.crypto?.randomUUID?.();
+        this.id = uuid ?? `${Date.now()}-${Math.random().toString(36).slice(2)}`;
         this.occurredAt = new Date();
     }
 }

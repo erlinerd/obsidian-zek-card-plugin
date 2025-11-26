@@ -1,4 +1,3 @@
-import { CardScene } from "@/domain/aggregates/card-note/enums/CardScene";
 
 /**
  * Unified parameters for card generation — enforce consistent strategy inputs

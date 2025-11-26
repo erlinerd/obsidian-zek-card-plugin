@@ -1,16 +1,10 @@
 import type { Plugin } from "vite";
-import * as fs from "fs";
-import * as path from "path";
 
 export interface BuildCallbackOptions {
 	/**
 	 * Callback invoked after build finishes
 	 */
 	onBuildComplete?: () => void;
-	/**
-	 * Whether to run the callback in dev mode
-	 */
-	runInDevMode?: boolean;
 }
 
 /**
@@ -19,7 +13,7 @@ export interface BuildCallbackOptions {
 export function buildCallbackPlugin(
 	options: BuildCallbackOptions = {}
 ): Plugin {
-	const { onBuildComplete, runInDevMode = true } = options;
+    const { onBuildComplete } = options;
 
 	return {
 		name: "build-callback",

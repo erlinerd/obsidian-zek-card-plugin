@@ -15,10 +15,7 @@
  */
 import { CardGenerationParams } from "@/domain/aggregates/card-note/dto/CardGenerationParams";
 import { CardScene } from "@/domain/aggregates/card-note/enums/CardScene";
-import type {
-	ICardPersistencePort,
-	CardData,
-} from "@/domain/aggregates/card-note/ports/ICardPersistencePort";
+import type { ICardPersistencePort } from "@/domain/aggregates/card-note/ports/ICardPersistencePort";
 import { CreateCardResponseDTO } from "@/application/use-cases/create-card/CreateCardResponseDTO";
 import type { ICardGenerationStrategyFactory } from "@/domain/aggregates/card-note/ports/ICardGenerationStrategyFactory";
 import { inject, injectable } from "tsyringe";

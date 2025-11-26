@@ -7,21 +7,21 @@ export interface ILoggerPort {
 	 * @param message Message text
 	 * @param data Optional extra data
 	 */
-	debug(message: string, data?: any): void;
+    debug(message: string, data?: unknown): void;
 
 	/**
 	 * Log informational message
 	 * @param message Message text
 	 * @param data Optional extra data
 	 */
-	info(message: string, data?: any): void;
+    info(message: string, data?: unknown): void;
 
 	/**
 	 * Log warning message
 	 * @param message Message text
 	 * @param data Optional extra data
 	 */
-	warn(message: string, data?: any): void;
+    warn(message: string, data?: unknown): void;
 
 	/**
 	 * Log error

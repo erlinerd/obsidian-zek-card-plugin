@@ -1,9 +1,5 @@
-import type {
-	ICardPersistencePort,
-	CardListItem,
-} from "@/domain/aggregates/card-note/ports/ICardPersistencePort";
 import { ListCardsUseCase } from "@/application/use-cases/ListCardsUseCase";
-import { container, inject, injectable } from "tsyringe";
+import { inject, injectable } from "tsyringe";
 import { TOKENS } from "@/infrastructure/di/Tokens";
 import type { ILoggerPort } from "@/domain/ports/ILoggerPort";
 import type { CardListItemDTO } from "@/frameworks-drivers/web/types";

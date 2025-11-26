@@ -5,7 +5,7 @@ import type { INotificationPort } from '@/domain/ports/INotificationPort'
 
 describe('CardPresenterAdapter', () => {
   beforeEach(() => {
-    ;(globalThis as any).__notices = []
+    (globalThis as any).__notices = []
   })
 
   it('shows created message for new file', () => {

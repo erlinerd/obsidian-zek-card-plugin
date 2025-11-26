@@ -26,7 +26,7 @@ export class CardMeta {
 		domain: string[],
 		source: string[],
 		created?: string,
-		type: string = "card"
+		type = "card"
 	) {
 		this.scene = this.validateScene(scene);
 		this.domain = this.validateAndConvertDomain(domain);

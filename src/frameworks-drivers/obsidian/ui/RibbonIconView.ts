@@ -11,7 +11,7 @@ import { DashboardViewPresenter } from "@/frameworks-drivers/obsidian/DashboardV
 export function registerRibbonIcon(plugin: Plugin): void {
     plugin.addRibbonIcon(
         "boom-box",
-        "zek-card",
+        "Zek card",
         (_evt: MouseEvent) => {
             new DashboardViewPresenter(plugin).openDashboardView();
         }

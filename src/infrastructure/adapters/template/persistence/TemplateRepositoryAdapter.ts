@@ -1,6 +1,6 @@
 import { Template } from "@/domain/aggregates/template/Template";
 import { ITemplateRepository } from "@/domain/aggregates/template/ports/ITemplateRepository";
-import path from "path";
+import { normalizePath } from "obsidian";
 import { injectable, inject } from "tsyringe";
 import { TOKENS } from "@/infrastructure/di/Tokens";
 import { Plugin } from "obsidian";
@@ -23,32 +23,23 @@ export class LocalTemplateRepository implements ITemplateRepository {
 		if (!this.plugin) {
 			throw new Error('Plugin instance not available for template repository');
 		}
-		this.templateDir = path.join(
-			this.plugin.app.vault.configDir,
-			"plugins",
-			"obsidian-zek-card-plugin",
-			"templates",
-		);
-	}
-	async getByFileName(fileName: string): Promise<Template | null> {
-		try {
-			if (!this.plugin || !this.plugin.app || !this.plugin.app.vault || !this.plugin.app.vault.adapter) {
-				throw new Error('Plugin instance or vault adapter not available for template repository');
-			}
-			const filePath = path.join(this.templateDir, `${fileName}-card.md`);
-			const rawContent = await this.plugin.app.vault.adapter.read(
-				filePath
-			);
-
-			if (!rawContent) {
-				throw new Error(`Template ${fileName} not found or read failed`);
-			}
-
-			// Return template instance (validated by factory method)
-			return Template.create(fileName, rawContent);
-		} catch (err) {
-			console.error(`Template ${fileName} not found or read failed`, err);
-			return null;
-		}
-	}
+        this.templateDir = normalizePath(
+            `${this.plugin.app.vault.configDir}/plugins/obsidian-zek-card-plugin/templates`
+        );
+    }
+    async getByFileName(fileName: string): Promise<Template | null> {
+        if (!this.plugin?.app?.vault?.adapter) {
+            return null;
+        }
+        const filePath = normalizePath(`${this.templateDir}/${fileName}-card.md`);
+        const exists = await this.plugin.app.vault.adapter.exists(filePath);
+        if (!exists) {
+            return null;
+        }
+        const rawContent = await this.plugin.app.vault.adapter.read(filePath);
+        if (!rawContent) {
+            return null;
+        }
+        return Template.create(fileName, rawContent);
+    }
 }

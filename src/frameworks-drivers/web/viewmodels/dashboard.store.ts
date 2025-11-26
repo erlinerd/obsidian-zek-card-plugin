@@ -31,7 +31,7 @@ export const useDashboardStoreBase = create<DashboardVMState>((set, get) => ({
 	unknownCount: 0,
 	domains: [],
 	domainItems: [],
-	sceneCards: { literature: [], idea: [], topic: [] } as any,
+    sceneCards: { literature: [], idea: [], topic: [] },
 	sceneStatistics: { 文献: 0, 闪念: 0, 观点: 0 },
 	fetchCards: async () => {
 		if (get().loading) return;
@@ -44,7 +44,7 @@ export const useDashboardStoreBase = create<DashboardVMState>((set, get) => ({
 			const grouped: Record<
 				SceneType,
 				{ name: string; path: string; scene: CardScene }[]
-			> = { literature: [], idea: [], topic: [] } as any;
+            > = { literature: [], idea: [], topic: [] };
 			for (const c of items) {
 				counts[c.scene as keyof typeof counts] =
 					(counts[c.scene as keyof typeof counts] || 0) + 1;

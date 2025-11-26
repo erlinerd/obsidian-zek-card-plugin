@@ -70,7 +70,7 @@ export class CardNote {
 		};
 	}
 
-	markCreated(filePath: string, notebookId: string = ""): void {
+	markCreated(filePath: string, notebookId = ""): void {
 		const evt = new CardCreatedEvent(
 			filePath,
 			this.title.getValue(),
@@ -81,7 +81,7 @@ export class CardNote {
 		this.domainEvents.push(evt);
 	}
 
-	markExisted(filePath: string, notebookId: string = ""): void {
+	markExisted(filePath: string, notebookId = ""): void {
 		const evt = new CardExistedEvent(
 			filePath,
 			this.title.getValue(),
