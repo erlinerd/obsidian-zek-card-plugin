@@ -5,11 +5,11 @@ import { App } from "@/frameworks-drivers/web";
 import { DASHBOARD_VIEW_TYPE } from "./ViewConstants";
 
 export class DashboardView extends ItemView {
-    private root: ReactDOM.Root | null = null;
+	private root: ReactDOM.Root | null = null;
 
-    constructor(leaf: WorkspaceLeaf) {
-        super(leaf);
-    }
+	constructor(leaf: WorkspaceLeaf) {
+		super(leaf);
+	}
 
 	getViewType(): string {
 		return DASHBOARD_VIEW_TYPE;
@@ -27,24 +27,21 @@ export class DashboardView extends ItemView {
 		this.root = ReactDOM.createRoot(container);
 
 		// Render the dashboard app
-		this.root.render(React.createElement(App));
+		await this.root.render(React.createElement(App));
 	}
 
 	async onClose() {
 		// Unmount the React root and clean up
 		if (this.root) {
-			this.root.unmount();
+			await this.root.unmount();
 			this.root = null;
 		}
 	}
 }
 
 export function registerDashboardView(plugin: Plugin): void {
-    // Register the dashboard view type with Obsidian
-    plugin.registerView(
-        DASHBOARD_VIEW_TYPE,
-        (leaf) => new DashboardView(leaf)
-    );
+	// Register the dashboard view type with Obsidian
+	plugin.registerView(DASHBOARD_VIEW_TYPE, (leaf) => new DashboardView(leaf));
 }
 
 export function detachDashboardView(plugin: Plugin): void {
