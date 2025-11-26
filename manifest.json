@@ -3,7 +3,7 @@
 	"name": "zek-card",
 	"version": "0.0.1",
 	"minAppVersion": "0.15.0",
-	"description": "Quickly create Idea/Literature/Topic cards from selected text and view a dashboard with stats and domain distribution in Obsidian.",
+	"description": "Quickly create Zettelkasten cards from selected text and view a dashboard with stats and domain distribution.",
 	"author": "erlinerd",
 	"authorUrl": "https://github.com/erlinerd",
 	"fundingUrl": "https://github.com/erlinerd/obsidian-zek-card-plugin",
