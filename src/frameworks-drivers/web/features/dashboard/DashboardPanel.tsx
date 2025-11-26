@@ -26,11 +26,15 @@ export const DashboardPanel = () => {
     const loading = useDashboardStore(selectLoading);
     const lastRefresh = useDashboardStore(selectLastRefresh);
     const fetchCards = useDashboardStore(selectFetchCards);
+
+	const fetchCardsHandler = () => {
+		fetchCards().catch(() => {});
+	};
     
     
     useEffect(() => {
         if (!loading && !lastRefresh) {
-            fetchCards();
+            fetchCardsHandler();
         }
     }, [loading, lastRefresh, fetchCards]);
 
@@ -68,7 +72,7 @@ export const DashboardPanel = () => {
 						variant="outline"
 						size="icon"
 						className="ui-btn-icon"
-						onClick={fetchCards}
+						onClick={fetchCardsHandler}
 					>
 						<RefreshCcw className="h-[1.2rem] w-[1.2rem]" />
 						<span className="sr-only">刷新</span>

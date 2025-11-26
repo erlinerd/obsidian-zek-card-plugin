@@ -1,5 +1,6 @@
 import { Card, CardContent, DashboardHeader } from '@/frameworks-drivers/shared';
 import { useDashboardStore, selectDomainItems } from '@/frameworks-drivers/web';
+import React from 'react';
 
 // Domain item type
 interface DomainItem {
@@ -26,7 +27,7 @@ export const DomainStatsContainer: React.FC<DomainStatsContainerProps> = () => {
 				description="按类别统计的卡片分布"
 			/>
 			<div className="space-y-2">
-				{domainItems.map((domainItem, index) => (
+				{domainItems.map((domainItem) => (
 					<Card
 						key={domainItem.id}
 						className="ui-card ui-animate-in"

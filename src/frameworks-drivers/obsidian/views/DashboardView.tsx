@@ -27,13 +27,13 @@ export class DashboardView extends ItemView {
 		this.root = ReactDOM.createRoot(container);
 
 		// Render the dashboard app
-		await this.root.render(React.createElement(App));
+		this.root.render(React.createElement(App));
 	}
 
 	async onClose() {
 		// Unmount the React root and clean up
 		if (this.root) {
-			await this.root.unmount();
+			this.root.unmount();
 			this.root = null;
 		}
 	}

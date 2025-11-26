@@ -22,10 +22,8 @@ interface DomainItemProps {
 
 export const DomainItem: React.FC<DomainItemProps> = ({
 	domain,
-	index,
 	onClick,
 	className,
-	style,
 }) => {
 	return (
 		<Item

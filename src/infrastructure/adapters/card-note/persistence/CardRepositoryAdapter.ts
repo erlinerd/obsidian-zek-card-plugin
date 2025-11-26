@@ -13,7 +13,7 @@ import { injectable, inject } from "tsyringe";
 import { TOKENS } from "@/infrastructure/di/Tokens";
 import type { ILoggerPort } from "@/domain/ports/ILoggerPort";
 import { Plugin, TFile } from "obsidian";
-import { CardScene, isValidCardScene } from "@/domain/aggregates/card-note/enums/CardScene";
+import { isValidCardScene } from "@/domain/aggregates/card-note/enums/CardScene";
 
 @injectable()
 export class CardRepositoryAdapter implements ICardPersistencePort {
@@ -56,7 +56,7 @@ export class CardRepositoryAdapter implements ICardPersistencePort {
             if (typeVal && String(typeVal).toLowerCase() !== "card") continue;
             const sceneVal = fm?.scene as string | undefined;
             if (!sceneVal || !isValidCardScene(sceneVal)) continue;
-            const domainsRaw = fm?.domain as unknown;
+            const domainsRaw = fm?.domain;
             const domainsArr: string[] = Array.isArray(domainsRaw)
                 ? (domainsRaw as unknown[]).map((d) => String(d))
                 : [];
@@ -64,7 +64,7 @@ export class CardRepositoryAdapter implements ICardPersistencePort {
             result.push({
                 name: file.basename,
                 path: file.path,
-                scene: sceneVal as CardScene,
+                scene: sceneVal,
                 domain: cleanDomains,
             });
         }

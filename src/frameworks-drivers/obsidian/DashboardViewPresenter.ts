@@ -29,6 +29,6 @@ export class DashboardViewPresenter {
             await leaf.setViewState({ type: DASHBOARD_VIEW_TYPE });
         }
 
-        this.plugin.app.workspace.revealLeaf(leaf);
+        this.plugin.app.workspace.revealLeaf(leaf).catch(() => {});
     }
 }

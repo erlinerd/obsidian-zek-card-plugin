@@ -12,8 +12,8 @@ export function registerRibbonIcon(plugin: Plugin): void {
     plugin.addRibbonIcon(
         "boom-box",
         "Zek card",
-        (_evt: MouseEvent) => {
-            new DashboardViewPresenter(plugin).openDashboardView();
+        () => {
+            new DashboardViewPresenter(plugin).openDashboardView().catch(() => {});
         }
     );
 }

@@ -6,12 +6,14 @@ import tailwindcss from "@tailwindcss/vite";
 import { buildCallbackPlugin } from "./scripts/build-callback-plugin";
 import fs from "fs";
 import path from "path";
+import eslintPlugin from "vite-plugin-eslint";
 
 export default defineConfig(({ mode }) => {
 	const prod = mode === "production";
 
 	return {
 		plugins: [
+			eslintPlugin(),
 			react(),
 			tailwindcss({
 				optimize: true,
@@ -19,15 +21,22 @@ export default defineConfig(({ mode }) => {
 			buildCallbackPlugin({
 				onBuildComplete: () => {
 					console.log("✅ 构建完成，正在复制文件...");
-                    const sourceDir = path.join(__dirname, "dist/obsidian");
+					const sourceDir = path.join(__dirname, "dist/obsidian");
 					const targetDir = __dirname;
 					const copyIfExists = (src: string, dest: string) => {
-						if (fs.existsSync(src)) fs.cpSync(src, dest, { recursive: true });
+						if (fs.existsSync(src))
+							fs.cpSync(src, dest, { recursive: true });
 					};
 					["main.js", "styles.css"].forEach((file) => {
-						copyIfExists(path.join(sourceDir, file), path.join(targetDir, file));
+						copyIfExists(
+							path.join(sourceDir, file),
+							path.join(targetDir, file)
+						);
 					});
-					copyIfExists(path.join(sourceDir, "chunks"), path.join(targetDir, "chunks"));
+					copyIfExists(
+						path.join(sourceDir, "chunks"),
+						path.join(targetDir, "chunks")
+					);
 					console.log("✅ 文件复制完成");
 				},
 				runInDevMode: true,
@@ -44,21 +53,27 @@ export default defineConfig(({ mode }) => {
 				: {
 						include: ["src/**/*"],
 						exclude: ["node_modules/**/*"],
-                  }, // enable watch only in development mode
+				  }, // enable watch only in development mode
 			lib: {
-				entry: resolve(__dirname, "src/frameworks-drivers/obsidian/main.ts"),
+				entry: resolve(
+					__dirname,
+					"src/frameworks-drivers/obsidian/main.ts"
+				),
 				name: "main",
 				fileName: () => "main.js",
 				formats: ["cjs"],
 			},
 			minify: prod,
 			sourcemap: prod ? false : "inline",
-            outDir: "./dist/obsidian",
+			outDir: "./dist/obsidian",
 			cssCodeSplit: false,
 			emptyOutDir: true,
 			rollupOptions: {
 				input: {
-					main: resolve(__dirname, "src/frameworks-drivers/obsidian/main.ts"),
+					main: resolve(
+						__dirname,
+						"src/frameworks-drivers/obsidian/main.ts"
+					),
 				},
 				output: {
 					entryFileNames: "main.js",

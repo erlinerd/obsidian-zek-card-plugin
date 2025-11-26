@@ -38,7 +38,6 @@ interface SceneCardListProps {
 export const SceneCardList: React.FC<SceneCardListProps> = React.memo(
 	({
 		cards,
-		loading,
 		onOpenCardFile,
 		emptyMessage,
 		title,

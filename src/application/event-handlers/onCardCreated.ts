@@ -11,7 +11,6 @@ import { container } from "tsyringe";
 import { TOKENS } from "@/infrastructure/di/Tokens";
 import type { ILoggerPort } from "@/domain/ports/ILoggerPort";
 import type { ICardPresenterPort } from "@/domain/aggregates/card-note/ports/ICardPresenterPort";
-import type { CardCreatedEvent } from "@/domain/aggregates/card-note/events/CardCreatedEvent";
 import type { ICardPersistencePort } from "@/domain/aggregates/card-note/ports/ICardPersistencePort";
 import { useDashboardStore } from "@/frameworks-drivers/web/viewmodels";
 

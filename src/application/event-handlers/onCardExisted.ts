@@ -10,7 +10,6 @@ import { container } from "tsyringe";
 import { TOKENS } from "@/infrastructure/di/Tokens";
 import type { ILoggerPort } from "@/domain/ports/ILoggerPort";
 import type { ICardPresenterPort } from "@/domain/aggregates/card-note/ports/ICardPresenterPort";
-import type { CardExistedEvent } from "@/domain/aggregates/card-note/events/CardExistedEvent";
 import type { ICardPersistencePort } from "@/domain/aggregates/card-note/ports/ICardPersistencePort";
 
 export function registerOnCardExisted(bus: IEventBusPort) {

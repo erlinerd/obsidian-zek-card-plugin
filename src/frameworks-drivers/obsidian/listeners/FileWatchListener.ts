@@ -6,7 +6,7 @@ import { debounce, Plugin } from 'obsidian';
  */
 export function registerFileWatchListeners(plugin: Plugin) {
     const debouncedFn = debounce(() => {
-        useDashboardStore.getState().fetchCards();
+        useDashboardStore.getState().fetchCards().catch(() => {});
     }, 500);
 
     // File created

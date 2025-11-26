@@ -24,8 +24,6 @@ interface CardListItemProps {
 
 export const CardListItem: React.FC<CardListItemProps> = ({ 
 	card, 
-	index, 
-	cardIndex, 
 	onClick
 }) => {
 	// Resolve icon component by card type

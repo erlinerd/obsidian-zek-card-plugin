@@ -88,7 +88,7 @@ const SCENE_CONFIGS: Record<SceneType, SceneConfig> = {
 const ScenePanel: React.FC<ScenePanelProps> = ({ onOpenCardFile }) => {
     const sceneStatistics = useDashboardStore(selectSceneStatistics);
     const sceneCards = useDashboardStore(selectSceneCards);
-    const loading = useDashboardStore((s) => s.loading as boolean);
+    const loading = useDashboardStore((s) => s.loading);
 	// Memoize `hasAnyScene` and `totalScenes` calculations
     const { hasAnyScene } = useMemo(
         () => ({
@@ -117,7 +117,7 @@ const ScenePanel: React.FC<ScenePanelProps> = ({ onOpenCardFile }) => {
                         <SceneCardList
                             cards={filteredCards}
                             loading={loading}
-                            onOpenCardFile={onOpenCardFile ?? ((card) => undefined)}
+                            onOpenCardFile={onOpenCardFile ?? (() => undefined)}
                             emptyMessage={config.emptyMessage}
                             title={config.title}
                             icon={config.icon}
